@@ -71,6 +71,8 @@ public class PacienteServiceImpl implements PacienteService {
                 .map(pacienteMapper::aResponseDTO)
                 .toList();
     }
+
+    @Transactional
     @Override
     public PacienteResponseDTO actualizarFoto(String codigoPaciente, MultipartFile archivo) {
         Paciente paciente = obtenerEntidadPorCodigo(codigoPaciente);

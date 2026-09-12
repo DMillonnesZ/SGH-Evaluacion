@@ -1,5 +1,8 @@
 package com.tecsup.sgh.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum TipoSangre {
     A_POSITIVO("A+"),
     O_POSITIVO("O+"),
@@ -16,12 +19,19 @@ public enum TipoSangre {
         this.etiqueta = etiqueta;
     }
 
+    @JsonValue
     public String getEtiqueta() {
         return etiqueta;
     }
 
-    @Override
-    public String toString() {
-        return etiqueta;
+    @JsonCreator
+    public static TipoSangre desdeEtiqueta(String etiqueta) {
+        for (TipoSangre tipo : values()) {
+            if (tipo.etiqueta.equalsIgnoreCase(etiqueta)) {
+                return tipo;
+            }
+        }
+        throw new IllegalArgumentException("Tipo de sangre invalido: " + etiqueta
+                + ". Valores aceptados: A+, A-, B+, B-, AB+, AB-, O+, O-");
     }
 }
